@@ -1,0 +1,46 @@
+<% include header.html %>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      	<div class="container">
+	        <div class="navbar-header">
+	          	<a class="navbar-brand" href="#">自动化测试 & 性能监控报警 & 数据埋点分析</a>
+	        </div>
+      	</div>
+	</nav>
+    <div class="jumbotron">
+      	<div class="container">
+        	<h1>Welcome</h1>
+        	<p>本站主要包括三大功能模块：自动化测试、性能监控报警和数据埋点分析。其中，自动化测试可以帮助我们快速定位代码的错误，性能监控报警可以帮助我们提高站点的性能体验，数据埋点分析可以帮助我们做出精准的发展判断。</p>
+        	<p><a class="btn btn-primary btn-lg" href="#" role="button" disabled="disabled">了解更多 &raquo;</a></p>
+      	</div>
+    </div>
+    <div class="container">
+      	<div class="row">
+	        <div class="col-md-4">
+	          	<h2>自动化测试</h2>
+	          	<p style="text-align:justify">
+	          		自动化测试分为两种：仅配置站点首页地址的自动化测试和需要配置每个待测页面地址的自动化测试。
+	          		本站的自动化测试分两步：1.通过每次自动请求访问每个待测页面的方式来抓取、分析和保存每个页面DOM元素的结构和必要属性，并对页面进行拍照保存为图片格式；2.对比同一页面任意两次访问保存的DOM结构，分析找出差异和可能错误的地方，并在对应页面的照片上标出，以方便我们快速定位错误。
+	          	</p>
+	          	<p><a class="btn btn-default" href="/autoIndex" role="button">去测试 &raquo;</a></p>
+	        </div>
+	        <div class="col-md-4">
+	          	<h2>性能监控报警</h2>
+	          	<p style="text-align:justify">
+	          		性能监控报警分为用户真实环境的监控报警和模拟环境的监控报警。其中真实环境监控报警，通过在前端页面插入js脚本的方式，来采集抓取每个用户在访问站点时的js运行错误、接口请求错误和页面渲染错误等数据，然后根据采集到的数据，进行统计分析处理，作出实时的监控报警；模拟环境监控报警，就是通过服务器启动外部应用程序的方式，来定时循环访问站点的页面，根据每次访问页面的实际效果，来对站点进行监控报警。
+	          	</p>
+	          	<p><a class="btn btn-default" href="#" role="button" disabled="disabled">去查看 &raquo;</a></p>
+	       </div>
+	        <div class="col-md-4">
+	          	<h2>数据埋点分析</h2>
+	          	<p style="text-align:justify">
+	          		数据埋点分析，就是通过在前端页面插入js脚本的方式，来采集用户在请求访问站点时的每个具体操作行为。然后根据采集到的海量用户行为数据，统计分析和计算站点和页面的PV、UV，页面元素的点击量、展现量，用户、订单的来源，以及不同来源的用户比例和订单转化率等，最终以图表的形式，直观的展现在我们PM的面前，以辅助PM对我们产品的后期部署做出更准确的判断。
+	          	</p>
+	          	<p><a class="btn btn-default" href="#" role="button" disabled="disabled">去查看 &raquo;</a></p>
+	        </div>
+  		</div>
+      	<hr>
+      	<footer class="footer">
+        	<p>&copy; BaiduNuomi 2016</p>
+      	</footer>
+    </div> 
+<% include footer.html %>

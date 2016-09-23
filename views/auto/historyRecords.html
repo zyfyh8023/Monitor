@@ -1,0 +1,74 @@
+<% include ../header.html %>
+	<div class="container">
+		<div class="blog-header">
+			<h1 class="blog-title">测试记录</h1>
+		</div>
+      	<div class="row">
+	        <div class="col-sm-8 blog-main">
+		        <div class="blog-post">
+		            <hr>
+		            <% if(!errno) { %>
+		            	<% if(allRes.length){ %>
+		            	<% for(var k=0; k<allRes.length; k++) { %>
+		            		<div class="panel panel-default">
+								<div class="panel-heading J_titleBtn">
+									站点名称：<%= allRes[k].name %>
+								</div>
+								<div class="panel-heading J_moreInof" style="display:none;word-wrap:break-word;word-break:break-all;">
+									入口地址：<%= allRes[k].firstPage %><br>
+									站点说明：<%= allRes[k].infoCon %>
+								</div>
+								<div class="panel-body">
+									<% if(allRes[k].elems.length) { %>
+									<table class="J_table table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th style="width:100px;">测试日期</th>
+												<th>测试说明</th>
+												<th style="width:50px;">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<form autocomplete ='off'>
+											<% for(var h=0; h<allRes[k].elems.length; h++){ %>
+												<tr>
+													<th scope="row">
+														<div class="checkbox">
+													        <label>
+													          	<input type="checkbox" data-website="<%= allRes[k].name %>" data-timenum="<%= allRes[k].elems[h].time %>">
+													        </label>
+												      	</div>
+													</th>
+													<td><%= dateformat(allRes[k].elems[h].time) %></td>
+													<td><%=allRes[k].elems[h].value %></td>
+													<td class="J_look" data-website="<%= allRes[k].name %>" data-timenum="<%= allRes[k].elems[h].time %>"><a href="javascript:;">查看</a></td>
+												</tr>
+											<% } %>
+											</form>
+										</tbody>
+									</table>
+									<% }else{ %>
+										暂无测试记录，快<a href="/autoCreate">去测试</a>吧！
+									<% } %>
+								</div>
+								<% if(allRes[k].elems.length>=2){ %>
+								<div class="panel-footer">
+									<button class="btn btn-default J_diff" type="button">对比差异</button> 注：仅可以选中两个版本的数据进行对比哦~ 
+								</div>
+								<% } %>
+							</div>
+						<% } %>
+			            <% }else{ %>
+			            	暂无记录，快<a href="/autoIndex">去创建</a>吧！
+			            <% } %>
+		            <% } %>
+		        </div>
+	        </div>
+	        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+				<% include rightSideBar.html %>
+	        </div>
+      	</div>
+    </div>
+<script src="/javascripts/auto/historyRecords.js"></script>
+<% include ../footer.html %>

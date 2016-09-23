@@ -1,0 +1,44 @@
+{   
+    "host": "http://lvyou.baidu.com/static/foreign",
+    "proxy": "",
+    "pages": [
+        {
+            "name": "channel",
+            "file":"/page/ticket/channel/channel.html",
+            "login": false
+        },
+        {
+            "name":"scenerylist",
+            "file":"/page/ticket/scenery_list/list.html",
+            "login": false
+        },
+        {
+            "name":"search",
+            "file":"/page/ticket/search/search.html",
+            "login": false
+        },
+        {
+            "name":"sceneryhotel_productlist",
+            "file":"/page/sceneryhotel/productlist/productlist.html",
+            "login": false
+        },
+        {
+            "name":"travel_list",
+            "file":"/page/travel/list/index.html",
+            "login": false
+        },
+        {
+            "name":"discount",
+            "file":"/page/ticket/discount/index.html?from_sid=795ac511463263cf7ae3def3&from_sname=%E4%B8%8A%E6%B5%B7",
+            "login": false
+        },
+        {
+            "name":"index",
+            "file":"/page/ticket/nuoindex/index.html?td_id=16172",
+            "login": false
+        }
+    ]
+}
+
+
+

@@ -1,0 +1,48 @@
+<% include ../header.html %>
+	<div class="container">
+		<div class="blog-header">
+			<h1 class="blog-title">新建测试</h1>
+		</div>
+      	<div class="row">
+	        <div class="col-sm-8 blog-main">
+		        <div class="blog-post">
+		            <hr />
+					<form class="J_comConfig">
+						<% if(allRes && allRes.length) { %>
+							<div class="form-group">
+								<label for="websiteName">测试站点</label><br>
+								<div class="btn-group">
+								  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">站点选择<span class="caret"></span>
+								  	</button>
+							  		<ul class="dropdown-menu">
+									<% for(var a=0; a<allRes.length; a++){ %>
+										<li class="J_website"><a href="javascript:;"><%= allRes[a] %></a></li>
+									<% } %>
+									</ul>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="firstPage">测试说明</label>
+								<textarea class="form-control J_info" rows="5" placeholder="简要的描述一下本次的测试吧"></textarea>
+							</div>
+							<button type="button" class="btn btn-default J_submit">开始测试</button>
+
+							<div class="panel panel-default J_msgPanel" style="margin-top:30px;display:none;">
+							  	<div class="panel-heading">测试信息实时反馈</div>
+							  	<div class="panel-body J_msgBody" style="height:400px;width:100%;background:#000;color:green;overflow:scroll">
+							  	</div>
+							</div>
+						<% }else{ %>
+							暂无站点可测试，快<a href="/autoIndex">去接入站点</a>吧！
+						<% } %>
+					</form>
+		        </div>
+	        </div>
+	        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+				<% include rightSideBar.html %>
+	        </div>
+      	</div>
+    </div>
+<script src="/javascripts/auto/autoCreate.js"></script>
+<% include ../footer.html %>
+

@@ -1,0 +1,83 @@
+<% include ../header.html %>
+	<div class="container">
+		<div class="blog-header">
+			<h1 class="blog-title">两次测试结果差异对比</h1>
+		</div>
+      	<div class="row">
+      		<hr>
+      		<div style="text-align:right;">
+      			<span style="width:30px;height:12px;display:inline-block;background:red;"></span>
+      			<font style="color:red;margin-right:20px">删除</font>
+      			<span style="width:30px;height:12px;display:inline-block;background:blue;"></span>
+      			<font style="color:blue;margin-right:20px">增加</font>
+      			<span style="width:30px;height:12px;display:inline-block;background:green;"></span>
+      			<font style="color:green">样式</font>
+      		</div>
+      		<h3 style="color:red;padding-left:15px;">两次测试有差异的页面：</h3>
+			<% for(var i=0, len=results.ins.length; i<len; i++) {%>
+				<% if(oldDivElem[i].length || newDivElem[i].length) { %>
+				<div class="col-md-6" style="margin-bottom:50px;">
+					<div style="color:blue;width:414px;height:60px;word-wrap:break-word;word-break:break-all;">
+			    		旧版<%= results.ins[i].pageName %>，改动：<%= oldDivElem[i].length %>处
+			    	</div>
+					<div style="height:736px;width:414px;overflow:auto;">
+					<div style="position:relative;">
+						<img src="<%= results.ins[i].index1Img %>">
+						<% for(var k=0; k<oldDivElem[i].length; k++){%>
+							<%- oldDivElem[i][k] %>
+						<% } %>
+					</div>
+					</div>
+				</div>
+				<div class="col-md-6" style="margin-bottom:50px;">
+					<div style="color:blue;width:414px;height:60px;word-wrap:break-word;word-break:break-all;">
+			    		新版<%= results.ins[i].pageName %>，改动：<%= newDivElem[i].length %>处
+			    	</div>
+					<div style="height:736px;width:414px;overflow:auto;">
+					<div style="position:relative;">
+						<img src="<%= results.ins[i].index2Img %>">
+						<% for(var k=0; k<newDivElem[i].length; k++){%>
+							<%- newDivElem[i][k] %>
+						<% } %>
+					</div>
+					</div>
+				</div>
+				<% } %>
+			<% } %>
+		</div>
+		<div class="row">
+			<h3 style="color:green;padding-left:15px;">旧版被删除的页面：</h3>
+			<% for(var i=0, len=results.outs.length; i<len; i++) {%>
+				<% if(results.outs[i].groupName==timenum1) { %>
+				<div class="col-md-6" style="margin-bottom:50px;">
+					<div style="color:blue;width:414px;height:40px;">
+			    		旧版<%= results.outs[i].pageName %>
+			    	</div>
+					<div style="height:736px;width:414px;overflow:auto;">
+					<div style="position:relative;">
+						<img src="<%= results.outs[i].Img %>">
+					</div>
+					</div>
+				</div>
+				<% } %>
+			<% } %>
+		</div>
+		<div class="row">
+			<h3 style="color:#D15FEE;padding-left:15px;">新版新增加的页面：</h3>
+			<% for(var i=0, len=results.outs.length; i<len; i++) {%>
+				<% if(results.outs[i].groupName==timenum2) { %>
+				<div class="col-md-6" style="margin-bottom:50px;">
+					<div style="color:blue;width:414px;height:40px;">
+			    		新版<%= results.outs[i].pageName %>
+			    	</div>
+					<div style="height:736px;width:414px;overflow:auto;">
+					<div style="position:relative;">
+						<img src="<%= results.outs[i].Img %>">
+					</div>
+					</div>
+				</div>
+				<% } %>
+			<% } %>
+      	</div>
+    </div>
+<% include ../footer.html %>

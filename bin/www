@@ -1,0 +1,149 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('mo:server');
+var http = require('http');
+//dep
+var fs = require("fs");
+var spawn = require("child_process").spawn;
+var path = require('path');
+var command = path.join(__dirname, '../', 'phantomjs', 'command.js'); //新版的
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '8086');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+var server = http.createServer(app);
+
+/**
+* my socket io
+*/
+var io = require('socket.io').listen(server); //引入socket.io模块并绑定到服务器
+io.on('connection', function(socket) {
+  //接收并处理客户端发送的事件
+  socket.on('autoStart', function(info, dropdown) {
+        //将消息输出到控制台
+        fs.readFile('./public/DataResults/Automation/'+dropdown+'/config.json', 'utf-8', function(err, data) {
+            if (err) {
+                console.log(err); socket.emit('autoStartErr', err);
+            } else {
+                var dataObj = JSON.parse(data),
+                    webSite = dataObj.websiteName,
+                    firstPage = dataObj.firstPage,
+                    timeNum=new Date().getTime();
+                var child_process = spawn("phantomjs", [command, '-auto', webSite, firstPage, timeNum]);
+                child_process.stdin.setEncoding('utf8');
+                child_process.stdout.setEncoding('utf8');
+                socket.emit('autoStartMsg', '测试开始：'+new Date());
+                //stdout
+                child_process.stdout.on('data', function(data) {
+                    if (data == 'successEnd') {
+                        fs.writeFile('./public/DataResults/Automation/'+webSite+'/log.txt', timeNum+"\t"+info+"\n", {flag:'a'}, function(err3){
+                          if(err3){
+                            socket.emit('autoStartErr', '测试结束，数据存储失败');
+                            console.log('测试结束，数据存储失败');
+                          }else{
+                            socket.emit('autoStartSuc', '测试结束：'+new Date());
+                            console.log('测试结束：'+new Date());
+                          }
+                        });
+                    } else {
+                      if(data.match('{M-ERROR}') || data.match('{M-WARN}')){
+                        console.log(data);  socket.emit('autoStartErr', data);
+                      }else if(data.match('{new page}') || data.match('{old page}') || data.match('{go back}') || data.match('{operation}')){
+                        console.log(data);  socket.emit('autoStartMsg', data);
+                      }else{
+                        console.log(data);  socket.emit('autoStartMsgMR', data);
+                      }
+                    }
+                });
+                //stderr
+                child_process.stderr.on('data', function(data) {
+                    console.log(data);  socket.emit('autoStartErr', data);
+                });
+                //error
+                child_process.on('error', function(data) {
+                    console.log(data);  socket.emit('autoStartErr', data);
+                });
+            }
+        });
+    })
+});
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
